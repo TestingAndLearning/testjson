@@ -23,9 +23,13 @@ data = response.read()
 projnames = json.loads(data)
 #print projnames['projects'][0]['name']
 
+d = {}
 
 for i in range (0, len(projnames['projects'])):
-    print projnames['projects'][i]['name']
+    d[projnames['projects'][i]['id']]= projnames['projects'][i]['name']
+    #print projnames['projects'][i]['name']
 
-for i in range (0, len(projnames['projects'])):
-    print projnames['projects'][i]['id']
+#for i in range (0, len(projnames['projects'])):
+    #print projnames['projects'][i]['id']
+for key in d:
+    print key, d[key]

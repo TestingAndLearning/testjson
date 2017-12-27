@@ -24,7 +24,10 @@ while start == 1
 		pagenumber += 1
 	else:
 		start = 0
+		pagenumber = 0
 		break
+		
+pagenumber = 0
 print "Task completed"
 
 #write to the file.
