@@ -1,36 +1,43 @@
 import urllib2, base64
 import json
 
+projnumbers = "".split(",")
+
 #Put your API Key here
-key = "twp_jOjBYHjCGE0X99V9erF4NHtiaKmk"
+key = "aaa"
 #Put your url here minus the page number
-url = "https://bsmall.teamwork.com/projects/268622/tasks.json"
+url1 = "https://asas.teamwork.com/projects/"
+url2 = "/latestactivity.json?page="
 
 pagenumber = 0
 start = 1
 tempjson = ""
 
-while start == 1
-	#pagenumber will increment at the end if a json result is found.
-	request = urllib2.Request(url+str(pagenumber).format())
-	request.add_header("Authorization", "BASIC " + base64.b64encode(key + ":xxx"))
+for p in projnumbers:
 
-	response = urllib2.urlopen(request)
-	data = response.read()
+	while start == 1:
+	        #pagenumber will increment at the end if a json result is found.
+	        request = urllib2.Request(url1+str(p)+url2+str(pagenumber).format())
+	        request.add_header("Authorization", "BASIC " + base64.b64encode(key + ":xxx"))
 
-	#Checks if maximum page reached.
-	if data != "200 ok":
-		tempjson = tempjson + data
-		pagenumber += 1
-	else:
-		start = 0
-		pagenumber = 0
-		break
-		
-pagenumber = 0
-print "Task completed"
+	        response = urllib2.urlopen(request)
+	        data = response.read()
 
-#write to the file.
-f = open("testfile.txt", "w")
-f.write(tempjson)
-f.close
+	        #Checks if maximum page reached.
+	        if data != "{\"activity\":[],\"STATUS\":\"OK\"}":
+	                tempjson = tempjson + data
+	                pagenumber += 1
+	                print "Found Page " + str(pagenumber)
+	        else:
+	                print "No page"
+	                start = 0
+	                #break
+	print "Task completed"
+	pagenumber = 0
+	start = 1
+
+	f = open("testfile.json", "a")
+	f.write(tempjson)
+	f.close
+
+	tempjson = ""

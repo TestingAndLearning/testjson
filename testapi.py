@@ -11,16 +11,16 @@ start = 1
 tempjson = ""
 
 while start == 1:
-        #pagenumber will increment at the end if a json result is found. 
+        #pagenumber will increment at the end if a json result is found.
         request = urllib2.Request(url+str(pagenumber).format())
         request.add_header("Authorization", "BASIC " + base64.b64encode(key + ":xxx"))
-         
+
         response = urllib2.urlopen(request)
         data = response.read()
 
 
 
-        #Checks if maximum page reached. 
+        #Checks if maximum page reached.
         if data != "{\"activity\":[],\"STATUS\":\"OK\"}":
                 tempjson = tempjson + data
                 pagenumber += 1
@@ -32,6 +32,6 @@ while start == 1:
 print "Task completed"
 pagenumber = 0
 
-f = open("testfile.txt", "w")
+f = open("testfile.json", "w")
 f.write(tempjson)
 f.close
