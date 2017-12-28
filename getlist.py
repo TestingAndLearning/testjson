@@ -4,9 +4,9 @@ import json
 #This script gets all project names
 
 #Put your API Key here
-key = "twp_jOjBYHjCGE0X99V9erF4NHtiaKmk"
+key = "aaa"
 #Put your url here minus the page number
-url = "https://bsmall.teamwork.com/projects.json"
+url = "https://asas.teamwork.com/projects.json"
 
 pagenumber = 0
 tempjson = ""
