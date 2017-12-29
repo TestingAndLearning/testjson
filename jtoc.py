@@ -2,11 +2,11 @@ import json
 
 import csv
 
-with open('testfile.json', 'r') as myfile:
-    jsontext=myfile.read().replace('\n', '')
+with open('sedthisjson2.txt', 'r') as myfile:
+    jsontext=myfile.read()
 
 project_parsed = json.loads(jsontext)
-p_data = project_parsed['todo-items']
+p_data = project_parsed['activity']
 # open a file for writing
 proj_data = open('ProjData.csv', 'w')
 # create the csv writer object
@@ -27,3 +27,5 @@ for p in p_data:
       csvwriter.writerow(p.values())
 
 proj_data.close()
+
+print "Task Completed"

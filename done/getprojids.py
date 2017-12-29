@@ -4,7 +4,7 @@ import json
 #This script gets all project names
 
 #Put your API Key here
-key = "aaa"
+key = ""
 #Put your url here minus the page number
 url = "https://asas.teamwork.com/projects.json"
 
@@ -32,4 +32,5 @@ for i in range (0, len(projnames['projects'])):
 #for i in range (0, len(projnames['projects'])):
     #print projnames['projects'][i]['id']
 for key in d:
+    #print key+",",
     print key, d[key]
