@@ -1,16 +1,3 @@
-}],
-	"STATUS": "OK"
-} {
-	"activity": [{
-
-
-},
-{
-	"activity": {
-
-
-
-
 sed 's/}],"STATUS":"OK"}{"activity":\[{/},{/g' sedthisjson.txt > sedthisjson2.txt
 
 
