@@ -34,6 +34,8 @@ tempprojnumbers = ""
 for pkey in d:
     tempprojnumbers = tempprojnumbers + pkey+",",
 
+
+#This part saves the json data into the file. 
 #####
 
 projnumbers = "".split(",")
@@ -71,7 +73,7 @@ for p in projnumbers:
 	pagenumber = 0
 	start = 1
 
-	f = open("testfile.json", "a")
+	f = open("outputrawdata.txt", "a")
 	f.write(tempjson)
 	f.close
 
