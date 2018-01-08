@@ -6,9 +6,9 @@ sys.setdefaultencoding('utf8')
 
 #This script gets all project IDs
 #Put your API Key here
-key = "bbb"
+key = "sgdg"
 #Put your url here minus the page number
-purl = "https://aaa.teamwork.com/projects.json"
+purl = "https://gersg.teamwork.com/projects.json"
 
 ptempjson = ""
 
@@ -25,26 +25,29 @@ projnames = json.loads(pdata)
 #print projnames['projects'][0]['name']
 
 #print projnames
-
 print "Getting project numbers. "
 
 d = {}
+pname = {}
 
+#Mapping Project ID to a company name. Also added project name.
 for i in range (0, len(projnames['projects'])):
-    #Company names had a dash and activity after it, and some dont have space aftert he dash. Splitting to only get the Company Name.
     d[projnames['projects'][i]['id']]= projnames['projects'][i]['company']['name']
+    pname[projnames['projects'][i]['id']]= projnames['projects'][i]['name'] #Project name
     #print projnames['projects'][i]['name']
 
+#Using these to store the project number and company name.
 tempprojnumbers = ""
 tempcompname = ""
 
 #for i in range (0, len(projnames['projects'])):
-    #print projnames['projects'][i]['id']
+#print projnames['projects'][i]['id']
+#Converting the names to a string so that I can split them later and use for loop, since im not familiar with how python handles hashes/maps, lengths, loops and stuff. Remember to figure it out.
 for pkey in d:
     tempprojnumbers = tempprojnumbers + pkey+","
+    #Not sure if I even need this, since im using the hash anyway. Do I even need any of this???
     tempcompname = tempcompname + d[pkey]+","
-    print d[pkey]
-    #Add temp name here
+    #print d[pkey]
 
 print "Finished getting project numbers. "
 #print tempprojnumbers
@@ -52,12 +55,15 @@ print "Finished getting project numbers. "
 #This part saves the json data into the file.
 #####
 
+#Last one is an empty slot, remember to get rid of that or it might end in bad request error.
 projnumbers = tempprojnumbers.split(",")
 #tempcompname =
 
 #Put your API Key here
 #key = "aaa"
 #Put your url here minus the page number
+#print projnumbers
+
 url1 = "https://visiercorp.teamwork.com/projects/"
 url2 = "/latestactivity.json?page="
 
@@ -75,7 +81,7 @@ for p in projnumbers:
 	response = urllib2.urlopen(request)
 	data = response.read()
 
-	#Checks if maximum page reached.
+	#Checks if maximum page reached. Api gives that status below if there is no other page left.
         if data != "{\"activity\":[],\"STATUS\":\"OK\"}":
 	    tempjson = tempjson + data
 	    pagenumber += 1
@@ -88,9 +94,10 @@ for p in projnumbers:
     pagenumber = 0
     start = 1
     progress = progress + 1
-    #Find and replace Project ID part with Project ID and Company Name in tempjson.
-    tempjson = tempjson.replace("\"projectId\":\""+p+"\",","\"projectId\":\""+p+"\",\"company\":\""+d[p]+"\",")
+    #Find and replace Project ID part with both Project ID and Company Name in the tempjson string.
+    tempjson = tempjson.replace("\"projectId\":\""+p+"\",","\"projectId\":\""+p+"\",\"company\":\""+d[p]+"\",\"projectName\":\""+pname[p]+"\",")
     print "Finished project " + p + " " + d[p] + " " + str(progress) + "/" + str(len(projnumbers))
+    #Appends to the file, doesn't overwrite.
     f = open("outputrawdata.txt", "a")
     f.write(tempjson)
     f.close
@@ -98,3 +105,5 @@ for p in projnumbers:
     tempjson = ""
 
 print "Task complete. "
+
+#After this, run the bash script with sed to remove and replace unvalid json formatting that results from this whole process of appending different pages of json objects into a string format. Remember to learn more about json because I am pretty sure there is a better way on handling things here.
