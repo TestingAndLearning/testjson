@@ -1,14 +1,15 @@
 import urllib2, base64
 import json
 import sys
+import time
 reload(sys)
 sys.setdefaultencoding('utf8')
 
 #This script gets all project IDs
 #Put your API Key here
-key = "sgdg"
+key = ""
 #Put your url here minus the page number
-purl = "https://gersg.teamwork.com/projects.json"
+purl = "https://a.teamwork.com/projects.json"
 
 ptempjson = ""
 
@@ -90,6 +91,7 @@ for p in projnumbers:
 	    print "No pages left"
 	    start = 0
 	    #break
+	time.sleep(1)
 
     pagenumber = 0
     start = 1
